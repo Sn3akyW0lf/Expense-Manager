@@ -17,7 +17,17 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 });
+
+// User.upsert = (name, email, password) => {
+//     const find = { email };
+//     const create = { email, amount };
+//     return User.findOrCreate({ where: find, defaults: create });
+// };
 
 module.exports = User
