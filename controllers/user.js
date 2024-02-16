@@ -39,10 +39,16 @@ exports.postLogin = async (req, res, next) => {
             }
         });
 
-        console.log(user.length);
+        // console.log(user[0].password);
 
         if (user.length) {
-            res.status(200).json(user);
+            if (password === user[0].password) {
+                console.log('Correct Password');
+                res.status(200).json(user);
+            } else {
+                console.log('Wrong Password');
+                res.status(401).json(user);
+            }
         } else{
             res.status(404).json(user);
         }
