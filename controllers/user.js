@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+
 
 exports.postUser = async (req, res, next) => {
 
@@ -9,16 +11,29 @@ exports.postUser = async (req, res, next) => {
         let email = req.body.email;
         let password = req.body.password;
 
-        const user = await User.create({
-            name: username,
-            email: email,
-            password: password
+        const saltrounds = 10;
+
+        bcrypt.hash(password, saltrounds, async (err, hash) => {
+            console.log(err);
+            const user = await User.create({
+                name: username,
+                email: email,
+                password: hash
+            });
+            console.log(user);
+            // userJS = user.toJSON();
+    
+            res.json({createdUser: user});
+
         });
 
-        console.log(user);
-        // userJS = user.toJSON();
+        // const user = await User.create({
+        //     name: username,
+        //     email: email,
+        //     password: password
+        // });
 
-        res.json({createdUser: user});
+
 
     } catch (err) {
         console.log('Error Occurred');
@@ -42,14 +57,19 @@ exports.postLogin = async (req, res, next) => {
         // console.log(user[0].password);
 
         if (user.length) {
-            if (password === user[0].password) {
-                console.log('Correct Password');
-                res.status(200).json(user);
-            } else {
-                console.log('Wrong Password');
-                res.status(401).json(user);
-            }
-        } else{
+            bcrypt.compare(password, user[0].password, (err, result) => {
+                if (err) {
+                    throw new Error('Something Went Wrong');
+                }
+                if (result) {
+                    console.log('Correct Password');
+                    res.status(200).json({ success: true, message: 'User Logged in Successfully' });
+                } else {
+                    console.log('Wrong Password');
+                    return res.status(401).json({ success: false, message: 'Wrong Password' });
+                }
+            })
+        } else {
             res.status(404).json(user);
         }
     } catch (err) {
