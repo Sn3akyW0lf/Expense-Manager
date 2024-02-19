@@ -7,6 +7,7 @@ const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
 
 const User = require('./models/user');
+const Expense = require('./models/expense');
 
 var cors = require('cors');
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 
 const userRoutes = require('./routes/user');
+const expenseRoutes = require('./routes/expense');
 
 app.use(bodyParser.json({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // })
 
 app.use(userRoutes);
+app.use('/expense', expenseRoutes);
 
 app.use(errorController.get404);
 
