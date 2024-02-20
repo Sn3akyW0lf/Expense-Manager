@@ -2,8 +2,12 @@ const Expense = require('../models/expense');
 
 exports.getExpenses = async (req, res, next) => {
     try {
-        const data = await Expense.findAll();
-        res.status(201).json({
+        console.log(req.user.id);
+        const data = await req.user.getExpenses();
+
+        console.log(data);
+
+        return res.status(201).json({
             allExpDetails: data
         });
     } catch (err) {
@@ -13,20 +17,20 @@ exports.getExpenses = async (req, res, next) => {
 
 exports.postAddExpense = async (req, res, next) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
 
         const body = req.body;
         const amount = body.expense;
         const description = body.exp_desc;
         const category = body.exp_type;
 
-        const data = await Expense.create({
+        const data = await req.user.createExpense({
             amount: amount,
             category: category,
             description: description
         });
 
-        res.status(201).json({
+        return res.status(201).json({
             newExpDetail: data
         });
 
@@ -37,11 +41,17 @@ exports.postAddExpense = async (req, res, next) => {
 
 exports.postDeleteExpense = async (req, res, next) => {
     try {
-        console.log(req.params.expId);
-        let expense = await Expense.findByPk(req.params.expId);
+        console.log(req.body);
+        let expense = await req.user.getExpenses({
+            where: {
+                id: req.body.id
+            }
+        });
         console.log(expense);
-        res.status(201).json({deletedExp: expense});
-        return expense.destroy();
+        await req.user.removeExpense(expense);
+        console.log('Success deleting Record');
+
+        return res.status(201).json({ success: true, message: 'Expense Succefully Deleted' })
     } catch (err) {
         console.log(err);
     }

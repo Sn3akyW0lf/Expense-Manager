@@ -34,6 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(userRoutes);
 app.use('/expense', expenseRoutes);
 
+User.hasMany(Expense);
+Expense.belongsTo(User);
+
 app.use(errorController.get404);
 
 async function start() {
