@@ -22,7 +22,8 @@ exports.postUser = async (req, res, next) => {
             const user = await User.create({
                 name: username,
                 email: email,
-                password: hash
+                password: hash,
+                ispremiumuser: false
             });
             console.log(user);
             // userJS = user.toJSON();

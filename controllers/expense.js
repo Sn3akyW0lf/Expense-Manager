@@ -51,7 +51,7 @@ exports.postDeleteExpense = async (req, res, next) => {
         await req.user.removeExpense(expense);
         console.log('Success deleting Record');
 
-        return res.status(201).json({ success: true, message: 'Expense Succefully Deleted' })
+        return res.status(201).json({ success: true, message: 'Expense Succefully Deleted' });
     } catch (err) {
         console.log(err);
     }
