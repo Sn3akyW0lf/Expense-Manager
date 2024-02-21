@@ -40,8 +40,10 @@ exports.postPurchaseSuccess = async (req, res, next) => {
 
         await req.user.update({ ispremiumuser: true });
 
-        console.log(JSON.stringify(order));
-        return res.status(201).json({ success: true, message: 'Payment Successful' });
+        let user = JSON.stringify(req.user);
+
+        console.log(JSON.stringify(req.user));
+        return res.status(201).json({ success: true, message: 'Payment Successful', userDetails: user });
     } catch (err) {
         console.log(err);
         res.status(403).json({ message: 'Something Went Wrong', error: err });

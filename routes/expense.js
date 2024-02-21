@@ -14,4 +14,6 @@ router.post('/add-expense', userAuth.authenticate , expenseController.postAddExp
 
 router.post('/delete-expense', userAuth.authenticate, expenseController.postDeleteExpense);
 
+router.get('/show-leaderboard', userAuth.authenticate, expenseController.getLeaderboard);
+
 module.exports = router;

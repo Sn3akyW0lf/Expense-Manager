@@ -4,11 +4,14 @@ exports.getExpenses = async (req, res, next) => {
     try {
         console.log(req.user.id);
         const data = await req.user.getExpenses();
+        // const user = JSON.stringify(req.user);
+        const user = req.user;
 
         console.log(data);
 
         return res.status(201).json({
-            allExpDetails: data
+            allExpDetails: data,
+            userData: user
         });
     } catch (err) {
         console.log(err);
@@ -55,4 +58,15 @@ exports.postDeleteExpense = async (req, res, next) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
+
+exports.getLeaderboard = async (req, res, next) => {
+    try{
+        const data = await Expense.findAll();
+
+        console.log(JSON.stringify(data));
+
+    } catch (err) {
+        console.log(err);
+    }
+};
