@@ -33,6 +33,12 @@ exports.postAddExpense = async (req, res, next) => {
             description: description
         });
 
+        let currExp = parseFloat(req.user.totalExpense) + parseFloat(amount);
+
+        console.log(currExp);
+
+        await req.user.update({ totalExpense: currExp });
+
         return res.status(201).json({
             newExpDetail: data
         });
@@ -55,17 +61,6 @@ exports.postDeleteExpense = async (req, res, next) => {
         console.log('Success deleting Record');
 
         return res.status(201).json({ success: true, message: 'Expense Succefully Deleted' });
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-exports.getLeaderboard = async (req, res, next) => {
-    try{
-        const data = await Expense.findAll();
-
-        console.log(JSON.stringify(data));
-
     } catch (err) {
         console.log(err);
     }

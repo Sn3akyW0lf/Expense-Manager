@@ -23,7 +23,8 @@ exports.postUser = async (req, res, next) => {
                 name: username,
                 email: email,
                 password: hash,
-                ispremiumuser: false
+                ispremiumuser: false,
+                totalExpense: 0
             });
             console.log(user);
             // userJS = user.toJSON();
