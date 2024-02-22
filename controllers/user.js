@@ -60,7 +60,7 @@ exports.postLogin = async (req, res, next) => {
         });
 
 
-        // console.log(user[0].password);
+        console.log(user[0]);
 
         if (user.length) {
             bcrypt.compare(password, user[0].password, (err, result) => {
@@ -69,7 +69,7 @@ exports.postLogin = async (req, res, next) => {
                 }
                 if (result) {
                     console.log('Correct Password');
-                    return res.status(200).json({ success: true, message: 'User Logged in Successfully', token: generateAccessToken(user[0].id) });
+                    return res.status(200).json({ success: true, message: 'User Logged in Successfully', token: generateAccessToken(user[0].id), premium: user[0].ispremiumuser });
                 } else {
                     console.log('Wrong Password');
                     return res.status(401).json({ success: false, message: 'Wrong Password' });

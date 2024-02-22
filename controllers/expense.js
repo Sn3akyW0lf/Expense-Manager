@@ -5,13 +5,13 @@ exports.getExpenses = async (req, res, next) => {
         console.log(req.user.id);
         const data = await req.user.getExpenses();
         // const user = JSON.stringify(req.user);
-        const user = req.user;
+        // const user = req.user;
 
         console.log(data);
 
         return res.status(201).json({
             allExpDetails: data,
-            userData: user
+            // userData: user
         });
     } catch (err) {
         console.log(err);

@@ -11,9 +11,9 @@ exports.getLeaderboard = async (req, res, next) => {
 
         expenses.forEach((expense) => {
             if (aggExpense[expense.userId]) {
-                aggExpense[expense.userId] = aggExpense[expense.userId] + expense.amount;
+                aggExpense[expense.userId] = aggExpense[expense.userId] + parseFloat(expense.amount);
             } else {
-                aggExpense[expense.userId] = expense.amount;
+                aggExpense[expense.userId] = parseFloat(expense.amount);
             }
         });
 
