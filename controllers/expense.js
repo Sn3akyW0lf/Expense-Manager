@@ -3,12 +3,12 @@ const sequelize = require('../util/database');
 
 exports.getExpenses = async (req, res, next) => {
     try {
-        console.log(req.user.id);
+        // console.log(req.user.id);
         const data = await req.user.getExpenses();
         // const user = JSON.stringify(req.user);
         // const user = req.user;
 
-        console.log(data);
+        // console.log(data);
 
         return res.status(201).json({
             allExpDetails: data,

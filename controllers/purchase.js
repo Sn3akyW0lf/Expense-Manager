@@ -5,8 +5,8 @@ const Orders = require('../models/order');
 exports.purchaseMembership = async (req, res, next) => {
     try{
         let rzp = new razorPay ({
-            key_id: 'rzp_test_A9GnVU8KAAWYwj',
-            key_secret: 'yxTO8G3CYBi0w1LXZ2mLVIy0'
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET
         });
         const amount = 333;
 
