@@ -1,10 +1,15 @@
 const Expense = require('../models/expense');
+const ExpenseServices = require('../services/expenseServices');
+const S3Services = require('../services/S3services');
+
 const sequelize = require('../util/database');
+const AWS = require('aws-sdk');
+require('dotenv').config();
 
 exports.getExpenses = async (req, res, next) => {
     try {
         // console.log(req.user.id);
-        const data = await req.user.getExpenses();
+        const data = await await ExpenseServices.getExpenses(req);
         // const user = JSON.stringify(req.user);
         // const user = req.user;
 
@@ -20,15 +25,12 @@ exports.getExpenses = async (req, res, next) => {
 };
 
 exports.postAddExpense = async (req, res, next) => {
+    const trans = await sequelize.transaction();
+    
     try {
         // console.log(req.body);
 
-        const body = req.body;
-        const amount = body.expense;
-        const description = body.exp_desc;
-        const category = body.exp_type;
-
-        const trans = await sequelize.transaction();
+        const { amount, description, category } = req.body;
 
         const data = await req.user.createExpense({
             amount: amount,
@@ -61,22 +63,66 @@ exports.postAddExpense = async (req, res, next) => {
 };
 
 exports.postDeleteExpense = async (req, res, next) => {
+    const trans = await sequelize.transaction();      
+    
     try {
         console.log(req.body);
-        let expense = await req.user.getExpenses({
+        const expense = await req.user.getExpenses({
+            attributes: [
+                'id',
+                'amount',
+                'userId'
+            ],
             where: {
                 id: req.body.id
             }
         });
-        console.log(expense);
-        await req.user.removeExpense(expense);
-        console.log('Success deleting Record');
 
-        return res.status(201).json({
-            success: true,
-            message: 'Expense Succefully Deleted'
+        let newExp = parseFloat(req.user.totalExpense) - parseFloat(expense[0].amount);
+
+        console.log(newExp);
+        
+        await req.user.update({
+            totalExpense: newExp
+        }, {
+            transaction: trans
         });
+
+        await req.user.removeExpense(expense, {
+            transaction :trans
+        });
+
+        await trans.commit();
+
+        return res.status(204).json({ success: true, message: 'Deleted Successfully' });
+
     } catch (err) {
+        await trans.rollback();
         console.log(err);
     }
 };
+
+exports.getDownload = async (req, res, next) => {
+    try {
+        const expenses = await ExpenseServices.getExpenses(req);
+
+        // console.log(expenses);
+
+        const strExpense = JSON.stringify(expenses);
+
+        const userId = req.user.id;
+
+        const fileName = `Expenses${userId}/${new Date()}.txt`;
+
+        const fileURL = await S3Services.uploadToS3(strExpense, fileName);
+
+        console.log(fileURL);
+
+        res.status(200).json({ fileURL, success: true });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, fileURL: '' });
+    }
+};
+
