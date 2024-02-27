@@ -6,13 +6,20 @@ const sequelize = require('../util/database');
 const AWS = require('aws-sdk');
 require('dotenv').config();
 
-const ITEMS_PER_PAGE = 10;
+let ITEMS_PER_PAGE = 10;
 
 exports.getExpenses = async (req, res, next) => {
     try {
+        console.log(req.query);
+        
         const page = req.query.page || 1;
+        ITEMS_PER_PAGE = req.query.rowsize;
+
         // console.log(req.user.id);
-        const data = await ExpenseServices.getExpenses(req);
+        const data = await req.user.getExpenses({
+            offset: (page - 1) * ITEMS_PER_PAGE,
+            limit: ITEMS_PER_PAGE
+        });;
         
         let totalItems;
         const total = await req.user.countExpenses();
@@ -20,11 +27,11 @@ exports.getExpenses = async (req, res, next) => {
 
         return res.status(201).json({
             allExpDetails: data,
-            currentPage: page,
-            hasNextPage: ITEMS_PER_PAGE * page < totalExpense,
-            nextPage: page + 1,
+            currentPage: parseInt(page),
+            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+            nextPage: parseInt(page) + 1,
             hasPreviousPage: page > 1,
-            previousPage: page - 1,
+            previousPage: parseInt(page) - 1,
             lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
             // userData: user
         });
