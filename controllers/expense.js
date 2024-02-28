@@ -12,8 +12,8 @@ exports.getExpenses = async (req, res, next) => {
     try {
         console.log(req.query);
         
-        const page = req.query.page || 1;
-        ITEMS_PER_PAGE = req.query.rowsize;
+        const page = parseInt(req.query.page) || 1;
+        ITEMS_PER_PAGE = parseInt(req.query.rowsize);
 
         // console.log(req.user.id);
         const data = await req.user.getExpenses({
