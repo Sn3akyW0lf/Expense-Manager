@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+require('dotenv').config();
+
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
 

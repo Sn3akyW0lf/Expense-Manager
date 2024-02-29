@@ -7,8 +7,6 @@ const {
     v4: uuidv4
 } = require('uuid');
 
-require('dotenv').config();
-
 exports.forgotPassword = async (req, res, next) => {
 
     try {
