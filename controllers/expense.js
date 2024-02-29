@@ -4,7 +4,6 @@ const S3Services = require('../services/S3services');
 
 const sequelize = require('../util/database');
 const AWS = require('aws-sdk');
-require('dotenv').config();
 
 let ITEMS_PER_PAGE = 10;
 
