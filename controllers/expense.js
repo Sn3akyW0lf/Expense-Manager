@@ -27,11 +27,11 @@ exports.getExpenses = async (req, res, next) => {
 
         return res.status(201).json({
             allExpDetails: data,
-            currentPage: parseInt(page),
+            currentPage: page,
             hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            nextPage: parseInt(page) + 1,
+            nextPage: page + 1,
             hasPreviousPage: page > 1,
-            previousPage: parseInt(page) - 1,
+            previousPage: page - 1,
             lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
             // userData: user
         });
@@ -120,25 +120,31 @@ exports.postDeleteExpense = async (req, res, next) => {
 
 exports.getDownload = async (req, res, next) => {
     try {
-        const expenses = await ExpenseServices.getExpenses(req);
 
-        // console.log(expenses);
+        if (req.user.ispremiumuser) {
+            const expenses = await ExpenseServices.getExpenses(req);
 
-        const strExpense = JSON.stringify(expenses);
+            // console.log(expenses);
 
-        const userId = req.user.id;
+            const strExpense = JSON.stringify(expenses);
 
-        const fileName = `Expenses${userId}/${new Date()}.txt`;
+            const userId = req.user.id;
 
-        const fileURL = await S3Services.uploadToS3(strExpense, fileName);
+            const fileName = `Expenses${userId}/${new Date()}.txt`;
 
-        console.log(fileURL);
+            const fileURL = await S3Services.uploadToS3(strExpense, fileName);
 
-        res.status(200).json({ fileURL, success: true });
+            console.log(fileURL);
+
+            return res.status(200).json({ fileURL, success: true });
+        } else {
+            return res.status(401).json({ success: false, message:'Sorry, This is a Premium Member Feature, Please Purchase Membership to Access this Page!' })
+        }
+        
 
     } catch (err) {
         console.log(err);
-        res.status(500).json({ success: false, fileURL: '' });
+        return res.status(500).json({ success: false, fileURL: '' });
     }
 };
 
