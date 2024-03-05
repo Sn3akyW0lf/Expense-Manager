@@ -51,6 +51,7 @@ exports.postUser = async (req, res, next) => {
 
 exports.postLogin = async (req, res, next) => {
     try {
+        console.log('test');
         let email = req.body.email;
         let password = req.body.password;
 

@@ -121,7 +121,7 @@ exports.getDownload = async (req, res, next) => {
     try {
 
         if (req.user.ispremiumuser) {
-            const expenses = await ExpenseServices.getExpenses(req);
+            const expenses = await req.user.getExpenses();
 
             // console.log(expenses);
 
