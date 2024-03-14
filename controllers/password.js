@@ -48,7 +48,7 @@ exports.forgotPassword = async (req, res, next) => {
         });
 
         console.log(user.email);
-        const link = `http://localhost:4000/password/reset-password/${uuid}`;
+        const link = `http://13.233.236.151:4000/password/reset-password/${uuid}`;
 
         const result = await tranEmailAPI.sendTransacEmail({
             sender,
@@ -150,7 +150,7 @@ exports.resetPassword = async (req, res, next) => {
                                 password: email.value
                             };
 
-                            let res = await axios.post('http://localhost:4000/password/update-password/${uuid}', objUser);
+                            let res = await axios.post('http://13.233.236.151:4000/password/update-password/${uuid}', objUser);
 
                             console.log(res);
                         }
