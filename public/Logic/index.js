@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             premiumMessage();
         }
 
-        let response = await axios.get(`http://13.233.152.205:4000/expense/get-expenses?page=${page}&rowsize=${row}`, {
+        let response = await axios.get(`http://13.233.236.151:4000/expense/get-expenses?page=${page}&rowsize=${row}`, {
 
         // let response = await axios.get(`/expense/get-expenses?page=${page}&rowsize=${row}`, {
             headers: {
@@ -71,7 +71,7 @@ async function deleteExp(e) {
             id: expense.id
         };
 
-        let res = await axios.post(`http://13.233.152.205:4000/expense/delete-expense`, expenseObj, {
+        let res = await axios.post(`http://13.233.236.151:4000/expense/delete-expense`, expenseObj, {
         // let res = await axios.post(`/expense/delete-expense`, expenseObj, {         
             headers: {
                 'Authorization': token
@@ -88,7 +88,7 @@ async function deleteExp(e) {
 document.getElementById('razorPremium').onclick = async function (e) {
     // const token = localStorage.getItem('token');
 
-    const response = await axios.get('http://13.233.152.205:4000/purchase/purchase-membership', {
+    const response = await axios.get('http://13.233.236.151:4000/purchase/purchase-membership', {
     // const response = await axios.get('/purchase/purchase-membership', {     
         headers: {
             'Authorization': token
@@ -106,7 +106,7 @@ document.getElementById('razorPremium').onclick = async function (e) {
             'contact': '7028796469'
         },
         'handler': async function (response) {
-            await axios.post('http://13.233.152.205:4000/purchase/update-transaction-status', {
+            await axios.post('http://13.233.236.151:4000/purchase/update-transaction-status', {
             // await axios.post('/purchase/update-transaction-status', {          
                 order_id: options.order_id,
                 payment_id: response.razorpay_payment_id
@@ -133,7 +133,7 @@ document.getElementById('razorPremium').onclick = async function (e) {
 
     rzpl.on('payment.failed', async function (response) {
         console.log(response);
-        await axios.post('http://13.233.152.205:4000/purchase/failed-transaction', {
+        await axios.post('http://13.233.236.151:4000/purchase/failed-transaction', {
         // await axios.post('/purchase/failed-transaction', {          
             order_id: options.order_id
         }, {
@@ -207,7 +207,7 @@ function listExpense(data) {
 async function getExpenses (page) {
     const row = localStorage.getItem('rowSize');
     
-    let response = await axios.get(`http://13.233.152.205:4000/expense/get-expenses?page=${page}&rowsize=${row}`, {
+    let response = await axios.get(`http://13.233.236.151:4000/expense/get-expenses?page=${page}&rowsize=${row}`, {
     // let response = await axios.get(`/expense/get-expenses?page=${page}&rowsize=${row}`, {   
         headers: {
             'Authorization': token

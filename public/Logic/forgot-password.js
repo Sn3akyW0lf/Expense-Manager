@@ -21,7 +21,7 @@ async function onSubmit(e) {
                 // student_parent: studentParentPhone.value
             };
 
-            let res = await axios.post('http://13.233.152.205:4000/password/forgot-password', objUser);
+            let res = await axios.post('http://13.233.236.151:4000/password/forgot-password', objUser);
 
             // let res = await axios.post('/password/forgot-password', objUser);  
 

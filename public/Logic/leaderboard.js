@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (isPremium == true) {
         razorPremium.className = 'd-none';
 
-        let result = await axios.get('http://13.233.152.205:4000/premium/show-leaderboard', {
+        let result = await axios.get('http://13.233.236.151:4000/premium/show-leaderboard', {
         // let result = await axios.get('/premium/show-leaderboard', {
             headers: {
                 'Authorization': token

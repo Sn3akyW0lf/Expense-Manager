@@ -42,7 +42,7 @@ async function onSubmit(e) {
 
             // console.log(objUser);
 
-            let res = await axios.post('http://13.233.152.205:4000/signup', objUser);
+            let res = await axios.post('http://13.233.236.151:4000/signup', objUser);
             // let res = await axios.post('/signup', objUser);
             
 

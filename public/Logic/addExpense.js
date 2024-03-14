@@ -40,7 +40,7 @@ async function onSubmit(e) {
             console.log(expObj);
 
 
-            let res = await axios.post('http://13.233.152.205:4000/expense/add-expense', expObj, { headers: { 'Authorization' : token } });
+            let res = await axios.post('http://13.233.236.151:4000/expense/add-expense', expObj, { headers: { 'Authorization' : token } });
 
             // let res = await axios.post('/expense/add-expense', expObj, { headers: { 'Authorization' : token } });
             
