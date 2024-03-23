@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EXPENSE TRACKER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+        crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous" ></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a href="index.html" class="navbar-brand">EXPENSE TRACKER</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>   
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="index.html" class="nav-link active align-self-center">Show Expenses</a>
+                </li>
+                <li class="nav-item">
+                    <a href="add-expense.html" class="nav-link">Add New Expense</a>
+                </li>
+                <li class="nav-item">
+                    <a href="leaderboard.html" class="nav-link">LeaderBoard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="report.html" class="nav-link">Report</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="d-flex justify-content-center">
+        <div id="msg_premium"></div>
+        <button id="razorPremium" class="btn btn-warning btn-sm btn-outline-dark p-3 m-3 align-self-center col-auto">Get Premium</button>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <!-- <script src="../js/checkout.js"></script>  -->
+        <a href="add-expense.html" class="btn btn-info btn-sm btn-outline-dark p-3 m-3 align-self-center col-auto">Add new Expense</a>
+        <select name="exp_rows" id="exp_rows" class="form-select form-select-sm form-bg-dark align-self-center">
+            <!-- <option value="none">Expenses per Page</option> -->
+            <option value="5" class="form-option">5</option>
+            <option value="10"class="form-option">10</option>
+            <option value="15"class="form-option">15</option>
+            <option value="20"class="form-option">20</option>
+            <option value="25"class="form-option">25</option>
+            <option value="30"class="form-option">30</option>
+        </select>
+        <a href="login.html" class="btn btn-danger btn-sm btn-outline-dark p-3 m-3 align-self-center col-auto">Logout</a>        
+    </div>
+    <div class="container text-bg-secondary rounded-2 p-2">
+        <center>
+            <h2 class="title">Previous Expenses</h2>
+        </center>
+        <table class="table table-bordered rounded-2 p-2">
+            <tbody id="tblExpense">
+            </tbody>
+        </table>
+        <div id="pagination" class="d-flex justify-content-center"></div>
+    </div>
+
+    <script src="../Logic/index.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js" ></script>    
+    
+</body>
+
+</html>
